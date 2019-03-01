@@ -1,0 +1,14 @@
+---
+# Will ensure additional fstab lines
+
+- name: Create defined mounts
+  mount:
+    path: "{{ item.path }}"
+    fstype: "{{ item.fstype }}"
+    src: "{{ item.src }}"
+    opts: "{{ item.opts | default('defaults') }}"
+    state: present
+  with_items: "{{ static_mounts }}"
+  when:
+    - static_mounts is defined
+
